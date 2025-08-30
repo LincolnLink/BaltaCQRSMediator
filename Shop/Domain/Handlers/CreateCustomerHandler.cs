@@ -1,18 +1,20 @@
+using MediatR;
 using Shop.Domain.Commands.Requests;
 using Shop.Domain.Commands.Responses;
-using Shop.Domain.Handlers;
 
 namespace Shop.Domain.Commands.Handlers
 {
-    public class CreateCustomerHandler : ICreateCustomerHandler
+    // Com o Mediatr
+    public class CreateCustomerHandler : 
+        IRequestHandler<CreateCustomerRequest, CreateCustomerResponse>
     {
-        public CreateCustomerResponse Handle(CreateCustomerRequest request)
+        public Task<CreateCustomerResponse> Handle(CreateCustomerRequest request, CancellationToken cancellationToken)
         {
             // Verifica se o cliente já está cadastrado
             // Valida os dados
             // Insere o cliente
             // Envia email de boas vindas
-            return new CreateCustomerResponse
+            var result = new CreateCustomerResponse
             {
                 Id = Guid.NewGuid(),
                 Name = "Lincoln Ferreira",
@@ -20,7 +22,28 @@ namespace Shop.Domain.Commands.Handlers
                 Date = DateTime.Now
             };
 
-
+            return Task.FromResult(result);
         }
     }
+
+    // Sem o Mediatr
+    //public class CreateCustomerHandler : ICreateCustomerHandler
+    //{
+    //    public CreateCustomerResponse Handle(CreateCustomerRequest request)
+    //    {
+    //        // Verifica se o cliente já está cadastrado
+    //        // Valida os dados
+    //        // Insere o cliente
+    //        // Envia email de boas vindas
+    //        return new CreateCustomerResponse
+    //        {
+    //            Id = Guid.NewGuid(),
+    //            Name = "Lincoln Ferreira",
+    //            Email = "link@email.com.br",
+    //            Date = DateTime.Now
+    //        };
+
+
+    //    }
+    //}
 }
